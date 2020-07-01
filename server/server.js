@@ -1,11 +1,31 @@
 const express = require("express")
 const app = express()
+const bodyParser = require("body-parser")
 
-app.get("/", (req, res) => {
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }))
+
+// parse application/json
+app.use(bodyParser.json())
+
+app.get("/user", (req, res) => {
+  res.json("GET User")
+})
+
+app.post("/user", (req, res) => {
+  let body = req.body
+  res.json({ persona: body })
+})
+
+app.put("/user/:id", (req, res) => {
+  let id = req.params.id
   res.json({
-    message: "Hello World!",
-    user: "Julian"
+    id
   })
+})
+
+app.delete("/user", (req, res) => {
+  res.json("DELETE User")
 })
 
 app.listen(3000, () => {
