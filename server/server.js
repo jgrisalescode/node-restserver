@@ -1,3 +1,4 @@
+require("./config/config")
 const express = require("express")
 const app = express()
 const bodyParser = require("body-parser")
@@ -35,6 +36,6 @@ app.delete("/user", (req, res) => {
   res.json("DELETE User")
 })
 
-app.listen(3000, () => {
-  console.log("Listening on port 3000")
+app.listen(process.env.PORT, () => {
+  console.log("Listening on port: " + process.env.PORT)
 })
