@@ -1,5 +1,7 @@
 require("./config/config")
 const express = require("express")
+const mongoose = require("mongoose")
+const colors = require("colors")
 const app = express()
 const bodyParser = require("body-parser")
 
@@ -36,6 +38,14 @@ app.delete("/user", (req, res) => {
   res.json("DELETE User")
 })
 
+mongoose.connect("mongodb://localhost:27017/cafe", (err, res) => {
+  if (err) {
+    throw err
+  } else {
+    console.log("Data base" + " ONLINE".green)
+  }
+})
+
 app.listen(process.env.PORT, () => {
-  console.log("Listening on port: " + process.env.PORT)
+  console.log("Listening on port: " + process.env.PORT.green)
 })
