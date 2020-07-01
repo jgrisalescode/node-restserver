@@ -17,7 +17,7 @@ mongoose.connect("mongodb://localhost:27017/cafe", (err, res) => {
   if (err) {
     throw err
   } else {
-    console.log("Data base" + " ONLINE".green)
+    console.log("Data base: " + "ONLINE".green)
   }
 })
 
