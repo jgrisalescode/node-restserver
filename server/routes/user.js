@@ -1,6 +1,7 @@
 const express = require("express")
 const app = express()
 const bcrypt = require("bcrypt")
+const _ = require("underscore")
 const User = require("../models/user")
 
 app.get("/user", (req, res) => {
@@ -33,9 +34,14 @@ app.post("/user", (req, res) => {
 
 app.put("/user/:id", (req, res) => {
   let id = req.params.id
-  let body = req.body
 
-  User.findByIdAndUpdate(id, body, { new: true }, (err, userDB) => {
+  // One way to validate what fileds update or not
+  // But we`ll use underscore.js to performe this feature
+  // delete body.password
+  // delete body.google
+  let body = _.pick(req.body, ["name", "email", "img", "role", "active"])
+
+  User.findByIdAndUpdate(id, body, { new: true, runValidators: true }, (err, userDB) => {
     if (err) {
       return res.status(400).json({
         ok: false,
