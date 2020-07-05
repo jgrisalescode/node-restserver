@@ -5,7 +5,27 @@ const _ = require("underscore")
 const User = require("../models/user")
 
 app.get("/user", (req, res) => {
-  res.json("GET User LOCAL!!")
+  let from = req.query.from || 0
+  from = Number(from)
+
+  let limit = req.query.limit || 5
+  limit = Number(limit)
+
+  User.find({})
+    .skip(from)
+    .limit(limit)
+    .exec((err, users) => {
+      if (err) {
+        return res.status(400).json({
+          ok: false,
+          err
+        })
+      }
+      res.json({
+        ok: true,
+        users
+      })
+    })
 })
 
 app.post("/user", (req, res) => {
