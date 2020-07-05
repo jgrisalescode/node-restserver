@@ -3,7 +3,7 @@ const uniqueValidator = require("mongoose-unique-validator")
 
 let Schema = mongoose.Schema
 let validRoles = {
-  values: ["ADMIN_ROLE", "USER_ROL"],
+  values: ["ADMIN_ROLE", "USER_ROLE"],
   message: "{VALUE} not a valid role"
 }
 
@@ -39,6 +39,13 @@ let userSchema = new Schema({
     default: false
   }
 })
+
+userSchema.methods.toJSON = function () {
+  let user = this
+  let userObject = user.toObject()
+  delete userObject.password
+  return userObject
+}
 
 // Using plugin mongoose-unique-validator
 userSchema.plugin(uniqueValidator, {
