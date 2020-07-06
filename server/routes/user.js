@@ -11,7 +11,7 @@ app.get("/user", (req, res) => {
   let limit = req.query.limit || 5
   limit = Number(limit)
 
-  User.find({}, "name email role google active img")
+  User.find({ active: true }, "name email role google active img")
     .skip(from)
     .limit(limit)
     .exec((err, users) => {
@@ -21,7 +21,7 @@ app.get("/user", (req, res) => {
           err
         })
       }
-      User.count({}, (err, count) => {
+      User.count({ active: true }, (err, count) => {
         res.json({
           ok: true,
           users,
@@ -80,7 +80,10 @@ app.put("/user/:id", (req, res) => {
 
 app.delete("/user/:id", (req, res) => {
   let id = req.params.id
-  User.findByIdAndRemove(id, (err, deletedUser) => {
+  let inactivateUser = {
+    active: false
+  }
+  User.findByIdAndUpdate(id, inactivateUser, { new: true }, (err, deletedUser) => {
     if (err) {
       return res.status(400).json({
         ok: false,
