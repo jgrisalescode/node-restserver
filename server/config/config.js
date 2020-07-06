@@ -1,4 +1,3 @@
-const dotenv = require("dotenv").config()
 // Port
 process.env.PORT = process.env.PORT || 3000
 // Enviroment
@@ -8,6 +7,6 @@ let urlDB
 if (process.env.NODE_ENV === "dev") {
   urlDB = "mongodb://localhost:27017/cafe"
 } else {
-  urlDB = process.env.CONNECTIONSTRING
+  urlDB = "mongodb+srv://todoAppUser:y1TCebmNZldvQkOD@cluster0-5kvum.mongodb.net/Cafe?retryWrites=true&w=majority"
 }
 process.env.URLDB = urlDB
