@@ -13,13 +13,21 @@ app.use(bodyParser.json())
 
 app.use(require("./routes/user"))
 
-mongoose.connect("mongodb://localhost:27017/cafe", (err, res) => {
-  if (err) {
-    throw err
-  } else {
-    console.log("Data base: " + "ONLINE".green)
+mongoose.connect(
+  "mongodb://localhost:27017/cafe",
+  {
+    useUnifiedTopology: true,
+    useNewUrlParser: true,
+    useCreateIndex: true
+  },
+  (err, res) => {
+    if (err) {
+      throw err
+    } else {
+      console.log("Data base: " + "ONLINE".green)
+    }
   }
-})
+)
 
 app.listen(process.env.PORT, () => {
   console.log("Listening on port: " + process.env.PORT.green)
