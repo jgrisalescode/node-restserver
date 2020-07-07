@@ -3,8 +3,9 @@ const app = express()
 const bcrypt = require("bcrypt")
 const _ = require("underscore")
 const User = require("../models/user")
+const { validateToken } = require("../midlewares/authentication")
 
-app.get("/user", (req, res) => {
+app.get("/user", validateToken, (req, res) => {
   let from = req.query.from || 0
   from = Number(from)
 
