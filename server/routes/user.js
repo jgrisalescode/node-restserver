@@ -3,7 +3,7 @@ const app = express()
 const bcrypt = require("bcrypt")
 const _ = require("underscore")
 const User = require("../models/user")
-const { validateToken } = require("../midlewares/authentication")
+const { validateToken, validateUserRole } = require("../midlewares/authentication")
 
 app.get("/user", validateToken, (req, res) => {
   let from = req.query.from || 0
@@ -32,7 +32,7 @@ app.get("/user", validateToken, (req, res) => {
     })
 })
 
-app.post("/user", validateToken, (req, res) => {
+app.post("/user", [validateToken, validateUserRole], (req, res) => {
   let body = req.body
   let user = new User({
     name: body.name,
@@ -56,7 +56,7 @@ app.post("/user", validateToken, (req, res) => {
   })
 })
 
-app.put("/user/:id", validateToken, (req, res) => {
+app.put("/user/:id", [validateToken, validateUserRole], (req, res) => {
   let id = req.params.id
 
   // One way to validate what fileds update or not
@@ -79,7 +79,7 @@ app.put("/user/:id", validateToken, (req, res) => {
   })
 })
 
-app.delete("/user/:id", validateToken, (req, res) => {
+app.delete("/user/:id", [validateToken, validateUserRole], (req, res) => {
   let id = req.params.id
   let inactivateUser = {
     active: false

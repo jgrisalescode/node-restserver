@@ -19,6 +19,21 @@ let validateToken = (req, res, next) => {
   })
 }
 
+let validateUserRole = (req, res, next) => {
+  let user = req.user
+  if (user.role === "ADMIN_ROLE") {
+    next()
+  } else {
+    return res.status(401).json({
+      ok: false,
+      err: {
+        message: "You moust be ADMIN User"
+      }
+    })
+  }
+}
+
 module.exports = {
-  validateToken
+  validateToken,
+  validateUserRole
 }
