@@ -32,7 +32,7 @@ app.get("/user", validateToken, (req, res) => {
     })
 })
 
-app.post("/user", (req, res) => {
+app.post("/user", validateToken, (req, res) => {
   let body = req.body
   let user = new User({
     name: body.name,
@@ -56,7 +56,7 @@ app.post("/user", (req, res) => {
   })
 })
 
-app.put("/user/:id", (req, res) => {
+app.put("/user/:id", validateToken, (req, res) => {
   let id = req.params.id
 
   // One way to validate what fileds update or not
@@ -79,7 +79,7 @@ app.put("/user/:id", (req, res) => {
   })
 })
 
-app.delete("/user/:id", (req, res) => {
+app.delete("/user/:id", validateToken, (req, res) => {
   let id = req.params.id
   let inactivateUser = {
     active: false
