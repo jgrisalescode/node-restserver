@@ -10,3 +10,7 @@ if (process.env.NODE_ENV === "dev") {
   urlDB = process.env.MONGO_URI
 }
 process.env.URLDB = urlDB
+
+// Token > Seed and Expire date
+process.env.TOKEN_EXPIRE_DATE = 60 * 60 * 24 * 30
+process.env.TOKEN_SEED = process.env.TOKEN_SEED || "we-are-in-develop-enviroment"
